@@ -1,0 +1,6 @@
+--- # my first yaml playbook for ansible
+- hosts: webservers
+  user: ubuntu
+  sudo: yes
+  connection: ssh
+  gather_facts: no
