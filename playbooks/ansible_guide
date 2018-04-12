@@ -1,0 +1,42 @@
+ansible dbserver -s -m apt -a 'pkg=mlocate state=installed update_cache=true'
+ansible webservers -s -m apt -a 'pkg=telnet state=installed update_cache=true'
+
+################appserver.xml
+
+- hosts: webservers
+  tasks:
+  - name: install vsftpd on app server
+    apt: pkg=vsftpd state=installed update_cache=true
+
+#############variable
+
+- hosts: webservers
+  vars: 
+   control_server: localhost
+   web_root: /var/www/html
+  tasks:
+  - name: install vsftpd on app server
+    apt: pkg=vsftpd state=installed update_cache=true
+
+
+##################### variable file ##################
+- hosts: webservers
+  vars_files:
+  - vars.yml
+  tasks:
+  - name: install vsftpd on app server
+    apt: pkg=vsftpd state=installed update_cache=true
+    
+    ##################### variable   ##################
+- hosts: webservers
+  vars:
+   author_name: Balaji
+  vars_files:
+  - vars.yml
+  tasks:
+  - name: install vsftpd on app server
+    apt: pkg=vsftpd state=installed update_cache=true
+    
+    
+
+
