@@ -1,0 +1,4 @@
+- hosts: webservers
+  tasks:
+  - name: install vsftpd on app server
+    apt: pkg=vsftpd state=installed update_cache=true
