@@ -1,0 +1,20 @@
+--- # my first yaml playbook for ansible
+- hosts: webservers
+  user: ubuntu
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  vars:
+    playbook_version: 0.1l
+  vars_files:
+    - conf/cp.yml
+  vars_prompt:
+     - name: web_domain
+       prompt: Web Domain
+  tasks:
+     - name: Install apache 
+       action: apt name=apache2 state=installed
+       notify: Restart apache2
+  handler: 
+        - name: Restart apache2
+          action: service name=apache2 state=restarted

@@ -1,0 +1,6 @@
+---
+- hosts: webservers
+  remote_user: ubuntu
+  tasks:
+    - name: please get the disk details from remote host
+      command: df -h 
