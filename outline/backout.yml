@@ -1,0 +1,22 @@
+---
+- hosts: webservers
+  user: ubuntu
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+
+  tasks:
+   - name: display timestart
+     raw: /bin/date > /home/ubuntu/playstartdate.log
+   - name: Install apache2
+     apt:  pkg=apache2 state=latest
+   - name: start the web service 
+     service: name=apache2 state=restarted
+   - name: verify that web server is running
+     command: service apache2 status
+     register: result
+   - debug: var=result
+   - name: install client software
+     apt: pkg=telnet state=latest
+   - name: display timestop
+     raw: /bin/date > /home//ubuntu/playstopdate.log
