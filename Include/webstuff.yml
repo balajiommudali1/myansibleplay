@@ -1,0 +1,11 @@
+--- # Web Playbook
+- hosts: webservers
+  user: ubuntu
+  sudo: yes
+  connection: ssh
+  vars_files:
+   - variables/variables.yml
+  tasks:
+   - include: packages/packages.yml
+   - include: commands/commands.yml
+   - include: handler/handler.yml
