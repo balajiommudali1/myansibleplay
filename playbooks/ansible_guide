@@ -304,7 +304,45 @@ PLAY RECAP *********************************************************************
 172.31.17.87               : ok=2    changed=1    unreachable=0    failed=0
 
 
+- name: Start Tomcat
+  service: name=tomcat state=started enabled=yes
 
+================ copy module ===========================================
+
+- name: Install Tomcat init script
+  copy: src=tomcat-initscript.sh dest=/etc/init.d/tomcat mode=0755
+  
+  ============= command module==================
+  
+  - name: Extract archive
+  command: chdir=/usr/share /bin/tar xvf /opt/apache-tomcat-7.0.61.tar.gz -C /opt/ creates=/opt/apache-tomcat-7.0.61
+  
+  
+============== cron module ================================
+
+ cat cron.yml
+--- # CRON MODULE EXAMPLE
+- hosts: webservers
+  user: ubuntu
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Add a CRON Job to the ubuntu User
+      cron: name="list files" minute="0" hour="1" job="ls -al > /home/ubuntu/ls.log"
+
+ansible-playbook cron.yml
+
+PLAY [webservers] ******************************************************************************************************************************************************
+
+TASK [Add a CRON Job to the ubuntu User] *******************************************************************************************************************************
+changed: [172.31.17.87]
+
+PLAY RECAP *************************************************************************************************************************************************************
+172.31.17.87               : ok=1    changed=1    unreachable=0    failed=0
+
+ip-172-31-17-87:~$ crontab -l
+#Ansible: list files
+0 1 * * * ls -al > /home/ubuntu/ls.log
 
 
 
