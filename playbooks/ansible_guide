@@ -189,3 +189,60 @@ PLAY RECAP *********************************************************************
 172.31.17.87               : ok=2    changed=1    unreachable=0    failed=1
 
 
+--- # The Pause Module
+- hosts: webservers
+  sudo: yes
+  user: ubuntu
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: Install apache2
+     action: apt name=apache2 state=installed
+   - name: Pausing
+     pause:
+      prompt: "Make sure the installation is complete .."
+   - name: Verify lynx installation
+     action: yum name=lynx state=present
+
+================================= wait for module-===============================
+ansible-playbook waitfor.yml                                                                                         [DEPRECATION WARNING]: Instead of sudo/sudo_user, use become/become_user and
+make sure become_method is 'sudo' (default). This feature will be removed in
+version 2.6. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+
+PLAY [webservers] **************************************************************
+
+TASK [Installing Apache Tomcat] ************************************************
+fatal: [172.31.17.87]: FAILED! => {"changed": false, "msg": "The Python 2 bindin                                                                                        gs for rpm are needed for this module. If you require Python 3 support use the `                                                                                        dnf` Ansible module instead.. The Python 2 yum module is needed for this module.                                                                                         If you require Python 3 support use the `dnf` Ansible module instead."}
+        to retry, use: --limit @/home/ubuntu/myansibleplay/playbooks/waitfor.ret                                                                                        ry
+
+PLAY RECAP *********************************************************************
+172.31.17.87               : ok=0    changed=0    unreachable=0    failed=1
+
+
+ cat waitfor.yml
+--- # The Wait for Module
+- hosts: webservers
+  sudo: yes
+  user: ubuntu
+  connection: ssh
+  gather_facts: no
+  tasks:
+    - name: Installing Apache Tomcat
+      action: yum name=tomcat state=installed
+    - name: Waiting for port 80 to listen
+      wait_for:
+        port: 80
+        state: started
+    - name: Verifying Lynx Installation
+      action: yum name=lynx state=present
+
+
+
+
+
+
+
+
+
+
