@@ -37,6 +37,68 @@ ansible webservers -s -m apt -a 'pkg=telnet state=installed update_cache=true'
   - name: install vsftpd on app server
     apt: pkg=vsftpd state=installed update_cache=true
     
-    
+ =============================Setup Module=====================================
+ 
+ ansible webservers -m setup -a "filter=ansible_architecture"
+172.31.17.87 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_architecture": "x86_64"
+    },
+    "changed": false
+}
+
+ ansible webservers -m setup | grep distribution
+        "ansible_distribution": "Ubuntu",
+        "ansible_distribution_file_parsed": true,
+        "ansible_distribution_file_path": "/etc/os-release",
+        "ansible_distribution_file_variety": "Debian",
+        "ansible_distribution_major_version": "16",
+        "ansible_distribution_release": "xenial",
+        "ansible_distribution_version": "16.04",
+        
+    ansible webservers -m setup -a "filter=ansible_kernel"
+172.31.17.87 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_kernel": "4.4.0-1054-aws"
+    },
+    "changed": false
+}
+
+ansible webservers -m setup -a "filter=ansible_interfaces"
+172.31.17.87 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_interfaces": [
+            "lo",
+            "eth0"
+        ]
+    },
+    "changed": false
+}
+
+
+
+ansible webservers -m setup -a "filter=ansible_memtotal_mb"
+172.31.17.87 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_memtotal_mb": 990
+    },
+    "changed": false
+}
+
+ ansible webservers -m setup -a "filter=ansible_processor"
+172.31.17.87 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_processor": [
+            "0",
+            "GenuineIntel",
+            "Intel(R) Xeon(R) CPU E5-2676 v3 @ 2.40GHz"
+        ]
+    },
+    "changed": false
+}
+
+
+
+
 
 
