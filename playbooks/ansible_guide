@@ -97,8 +97,70 @@ ansible webservers -m setup -a "filter=ansible_memtotal_mb"
     "changed": false
 }
 
+============================file Module======================
 
+ ansible webservers -m file -a 'path=/etc/fstab'
+172.31.17.87 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0644",
+    "owner": "root",
+    "path": "/etc/fstab",
+    "size": 51,
+    "state": "file",
+    "uid": 0
+}
 
+ansible webservers -m file -a 'path=/etc'
+172.31.17.87 | SUCCESS => {
+    "changed": false,
+    "gid": 0,
+    "group": "root",
+    "mode": "0755",
+    "owner": "root",
+    "path": "/etc",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+
+ ansible webservers -s -m file -a 'path=/tmp/etc state=directory mode=0700 owner=root'
+[DEPRECATION WARNING]: The sudo command line option has been deprecated in
+favor of the "become" command line arguments. This feature will be removed in
+version 2.6. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+172.31.17.87 | SUCCESS => {
+    "changed": true,
+    "gid": 1000,
+    "group": "ubuntu",
+    "mode": "0700",
+    "owner": "root",
+    "path": "/tmp/etc",
+    "size": 4096,
+    "state": "directory",
+    "uid": 0
+}
+
+ansible webservers -s -m copy -a 'src=/etc/fstab dest=/tmp/etc/fstab'
+[DEPRECATION WARNING]: The sudo command line option has been deprecated in
+favor of the "become" command line arguments. This feature will be removed in
+version 2.6. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+172.31.17.87 | SUCCESS => {
+    "changed": true,
+    "checksum": "09de803026457c64794c00d33bd8b2a31e9010a1",
+    "dest": "/tmp/etc/fstab",
+    "gid": 0,
+    "group": "root",
+    "md5sum": "6511b29dde66232451c07247e99e126d",
+    "mode": "0644",
+    "owner": "root",
+    "size": 51,
+    "src": "/home/ubuntu/.ansible/tmp/ansible-tmp-1524044380.11-57746600269396/source",
+    "state": "file",
+    "uid": 0
+}
 
 
 
