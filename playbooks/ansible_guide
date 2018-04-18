@@ -268,7 +268,41 @@ PLAY RECAP *********************************************************************
 172.31.17.87               : ok=1    changed=1    unreachable=0    failed=0
 
 
-====================
+==================== service module ==============================
+
+https://docs.ansible.com/ansible/2.3/service_module.html
+
+cat service.yml
+--- # apt module
+- hosts: webservers
+  sudo: yes
+  user: ubuntu
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: install apache using apt module
+     apt: pkg=apache2 state=installed
+   - name: restart apache2 service
+     service: name=apache2 state=restarted
+ ansible-playbook service.yml                                                                                         [DEPRECATION WARNING]: Instead of sudo/sudo_user, use become/become_user and
+make sure become_method is 'sudo' (default). This feature will be removed in
+version 2.6. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+
+PLAY [webservers] **************************************************************
+
+TASK [install apache using apt module] *****************************************
+[DEPRECATION WARNING]: State 'installed' is deprecated. Using state 'present'
+instead.. This feature will be removed in version 2.9. Deprecation warnings can
+ be disabled by setting deprecation_warnings=False in ansible.cfg.
+ok: [172.31.17.87]
+
+TASK [restart apache2 service] *************************************************
+changed: [172.31.17.87]
+
+PLAY RECAP *********************************************************************
+172.31.17.87               : ok=2    changed=1    unreachable=0    failed=0
+
 
 
 
