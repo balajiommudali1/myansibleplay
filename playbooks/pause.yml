@@ -1,0 +1,14 @@
+--- # The Pause Module
+- hosts: webservers
+  sudo: yes
+  user: ubuntu
+  connection: ssh
+  gather_facts: no
+  tasks:
+   - name: Install apache2 
+     action: apt name=apache2 state=installed
+   - name: Pausing 
+     pause:
+      prompt: "Make sure the installation is complete .."
+   - name: Verify lynx installation
+     action: yum name=lynx state=present
