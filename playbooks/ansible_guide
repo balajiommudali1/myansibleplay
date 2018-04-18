@@ -162,5 +162,30 @@ deprecation_warnings=False in ansible.cfg.
     "uid": 0
 }
 
+=============================pause module===============================
+
+ ansible-playbook pause.yml
+[DEPRECATION WARNING]: Instead of sudo/sudo_user, use become/become_user and make sure become_method is 'sudo' (default). This feature will be removed in version 2.6.
+Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+
+PLAY [webservers] ******************************************************************************************************************************************************
+
+TASK [Install apache2] *************************************************************************************************************************************************
+[DEPRECATION WARNING]: State 'installed' is deprecated. Using state 'present' instead.. This feature will be removed in version 2.9. Deprecation warnings can be
+disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [172.31.17.87]
+
+TASK [Pausing] *********************************************************************************************************************************************************
+[Pausing]
+Make sure the installation is complete ..:
+
+ok: [172.31.17.87]
+
+TASK [Verify lynx installation] ****************************************************************************************************************************************
+fatal: [172.31.17.87]: FAILED! => {"changed": false, "msg": "The Python 2 bindings for rpm are needed for this module. If you require Python 3 support use the `dnf` Ansible module instead.. The Python 2 yum module is needed for this module. If you require Python 3 support use the `dnf` Ansible module instead."}
+        to retry, use: --limit @/home/ubuntu/myansibleplay/playbooks/pause.retry
+
+PLAY RECAP *************************************************************************************************************************************************************
+172.31.17.87               : ok=2    changed=1    unreachable=0    failed=1
 
 
