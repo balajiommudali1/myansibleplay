@@ -551,10 +551,66 @@ ip-172-31-17-87:~$ crontab -l
       - name: ping all the hosts 
         ping: 
    ============================ Unarchive Module ==================
-   
-   
+ --- #UNARCHIVE MODULE EXAMPLE
+ - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: copy and unarchive a file 
+        unarchive: src=test.tar.gz dest=/home/ubuntu/local copy=no
+    ================= HTPASSWD ======================================
+        
+        htpasswd: path=/etc/apache2/.htpasswd name=ubuntu password=password owner=ubuntu group=ubuntu mode=0640
       
         
+    ================== GetURL Module ===========================
+    
+    get_url: url=http://www.google.com/test.ini dest=/home/ubuntu/mytest.ini mode=0440 
+    
+    =================== Group Module ====================
+    
+    group: name=newgroup state=present 
+    
+    #Additional parameter
+    
+    gid=1050  system=yes
+    
+    ================== Mail Module ======================
+    
+    mail: 
+       host='localhost'
+       port=25
+       to='ubuntu'
+       subject="Our host is finished deploying"
+       body='System called {{ ansible_hostname }} has been successfully set up"
+      
+  ================== Filesystem ================
+  filesystem: fstype=ext2 dev=/dev/xvdf1 opts="-cc"
+  
+  ============== Mount =====================
+  
+  mount: name=/mnt/data src=/dev/xvdf1 fstype=ext3 opts=rw state=present
+   or 
+  mount: src='UUID=ddddkjkjkjk'
+  
+  ================== AptRepo Module ==============================
+  
+  apt: pkg=python-apt state=latest
+  
+  ================== AptKey Module =================
+  apt: pkg=python-apt state=latest
+  -name: Add the key
+  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=absent
+  - name: Add the google repo for ubuntu
+  apt_repository: repo=deb http://dl.google.com/linux/deb/ state main non-free' state=present
+  
+  
+  
+  
+  
+  
     
     
     
