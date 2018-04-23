@@ -17,7 +17,16 @@
 
 #################### role based tasks =================================
 
-
-
-
-
+--- #Master Playbook for web servers
+- hosts: apacheweb
+  user: ubuntu
+  sudo: yes
+  connection: ssh
+  pre-tasks:
+   - name: When did the ROLE start
+     raw: date > /home/ubuntu/startofrole.log
+  roles:
+    - webservers
+  post_tasks:
+    - name: When did the ROLE end
+      raw: date > /home/ubuntu/endofrole.log
