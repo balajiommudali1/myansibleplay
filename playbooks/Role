@@ -41,6 +41,9 @@
 - name: Install (Debian/Ubuntu) Apache Web Server
   apt: pkg=apache2 state=latest
   when: "ansible_os_family == 'Debian'"
-  
-  
-   ignore_errors: yes
+  ignore_errors: yes
+
+
+================ Roles - Variable substitution ==================
+
+
