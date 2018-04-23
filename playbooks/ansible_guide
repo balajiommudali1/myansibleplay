@@ -455,8 +455,116 @@ ip-172-31-17-87:~$ crontab -l
       - debug: msg={{ singlefact }}
       
       # ansible-playbook setfact.yml
-      ============================ Stat Module ================
+ ============================ Stat Module ================
+  --- #Stat MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+    - name: Does a file/directory in a path exist or not?
+      stat: path=/home/ubuntu/abc
+        register: p
+    - debug: msg="The Path Exists and is a Directory"
+        when: p.stat.isdir is defined and p.stat.isdir
+    
+    # ansible-playbook stat.yml
+    
+    
+    ========= script module ==================
+    
+    vim sys_uptime.sh
+    #!/bin/bash
+    /usr/bin/uptime
+    
+ --- #script MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+    - script: /home/ubuntu/sys_uptime.sh > uptime.log --some-arguments 1234
+   
+   #ansible_playbook script.yml
+   
+   
+    ========================== Shell Modulle =====================
+  --- #shell MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+     - name: Executing a remote command - uptime
+       shell: /use/bin/uptime >> uptime.log
+       args: 
+         chdir: /logs
+         creates: uptime.log
+            
+    #ansible_playbook shell.yml
+    
+    ==================== SELinux Module ==========================
+  --- #SELinux MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+     - name: change selinux configuration to permissive
+       selinux: state=disabled
+    
+    # ansible_playbook selinux.yml
+    
+    ======================= SEBoolean Module =======================
+     --- #SEBoolean MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: Change Boolean for anonymous writes on the web server
+        seboolean: name=httpd_anon_write state=yes persistent=yes
+    ============================ Raw Module =======================
+  --- #raw MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: find the system uptime for the hosts
+        raw: /usr/bin/uptime > /home/ubuntu/uptime.log
+    =========================== Ping Module ==========
+    
+  --- #ping MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: ping all the hosts 
+        ping: 
+   ============================ Unarchive Module ==================
+   
+   
       
+        
+    
+    
+    
+    
+    
+     
+    
+    
+        
+        
       
    
    
