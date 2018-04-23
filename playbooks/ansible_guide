@@ -424,9 +424,41 @@ ip-172-31-17-87:~$ crontab -l
       
    # ansible-playbook dnf.yml
    
+    
+ ============================== Apache2_Module =================
+ --- #Apache2_Module MODULE EXAMPLE
+  - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: no
+    tasks:
+      - name: Diable the alias module in apache2
+        apache2_module: state=absent name=alias
+     
+    # ansible-playbook apache2_module.yml
+    
+    ====================== Setfact Module ========================
+    --- #SETFACT MODULE
+    -hosts: webservers
+     user: ubuntu
+     sudo: yes
+     connection: ssh
+     gather_facts: no
+     vars:
+       playbook_version: 0.1
+     tasks: 
+      - name: Local variable display
+        set_fact:
+          singlefact: SOMETHING
+      - debug: msg={{ playbook_version }}
+      - debug: msg={{ singlefact }}
+      
+      # ansible-playbook setfact.yml
+      ============================ Stat Module ================
+      
+      
    
-   
-   ============================== 
    
    
    
