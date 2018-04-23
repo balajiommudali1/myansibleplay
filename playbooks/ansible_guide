@@ -606,8 +606,66 @@ ip-172-31-17-87:~$ crontab -l
   - name: Add the google repo for ubuntu
   apt_repository: repo=deb http://dl.google.com/linux/deb/ state main non-free' state=present
   
+  ================ Git module =========================
   
+  git: repo=ssh://ubuntu@192.168.90.1/home/ubuntu/testrepo dest=/home/ubuntu/gitrepo update=yes
   
+  ===================== Template Module ====================
+  
+  template: src=test.conf.j2 dest=/home/ubuntu/test.conf owner=ubuntu mode=750
+  
+  ============================ MYSQL_DB MODULE===============
+ --- #MYSQL_DB MODULE EXAMPLE
+ - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: yes
+    tasks:
+      - name: Install the python MYSQL suppoty lib
+        yum: pkg=MySQL-python state=latest
+      - name: Create a New Test DB called MyNewDB
+        mysql_db: name=MynewDB state=present login_user=root login_password=password123
+        
+        or 
+        
+       # to take dump
+       
+       mysql_db: name=MynewDB state=dump targe=/var/lib/mydb.sql login_user=root login_password=password123
+        
+        ===========================MySQL_User Module ====================
+        
+ --- #MySQL_User MODULE EXAMPLE
+ - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: yes
+    tasks:
+      - name: Install the python MYSQL suppoty lib 
+        yum: pkg=MySQL-python state=latest
+      - name: Create a new user called BOB and give all access
+        mysql_user: name=bob password=123password priv=*.*:ALL state=present login_user=root login_password=password123
+  ================================ Kernel_Blacklist ===================
+   --- #Kernel_Blacklist  MODULE EXAMPLE
+ - hosts: webservers
+    user: ubuntu
+    sudo: yes
+    connection: ssh
+    gather_facts: yes
+    tasks:
+      - name: Blacklist the dummy kernel module 
+        kernel_blacklist: name=dummy state=present
+        
+        ========================
+      
+  
+        
+      
+        
+        
+        
+        
   
   
   
