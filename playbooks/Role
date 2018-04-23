@@ -1,1 +1,23 @@
 ======================= ANSIBLE ROLE =================================
+#mkdir roles
+#mkdir common
+#mkdir webservers
+#mkdir appservers
+#mkdir cachingservers
+#cd common
+#mkdir files
+#mkdir templates
+#mkdir tasks
+#mkdir handlers
+#mkdir vars
+#mkdir defaults
+#mkdir meta
+#cd appservers
+
+
+#################### role based tasks =================================
+
+
+
+
+
